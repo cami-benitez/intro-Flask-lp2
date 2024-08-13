@@ -19,3 +19,34 @@ pip install Flask
 pip freeze
 pip freeze > paquetes.txt
 ```
+#### En caso de crear el proyecto 
+``` 
+pip install .r paquete.txt
+```
+#### traer cambios del repositorio
+```
+git pull
+```
+#### crear ramas hijas 
+```
+git checkout -b rama-hija
+```
+#### moverse entre ramas 
+```
+git checkout nombrerama
+```
+#### mostral las ramas, incluida la que esta en uso 
+```
+git brach
+```
+
+
+
+
+
+
+
+
+
+
+

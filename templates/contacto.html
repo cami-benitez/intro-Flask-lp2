@@ -4,9 +4,47 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Holis</title>
+    <link rel="stylesheet" href= "{{ url_for('static', filename='css/bootstrap.min.css')}}">
 </head>
 <body>
     <h3>Holis desde el servidor</h3>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis in provident sapiente, error delectus perferendis non consectetur a? Qui totam et vitae suscipit ullam asperiores odio, earum tenetur eos. Beatae.</p>
+    <div class="container">
+        <h3 id="hEncabezado">Registro de Mascotas</h3>
+        <div class="row">
+            <div class="col col-md-6 col-md-6 col-md-6">              
+                <div class="card">
+                <div class="card-header bg-info text-white">Información del cliente</div>
+                    <label for="">Nombres:</label>
+                    <input type="text" class="form-control" placeholder="Escribe tu nombre" id="txtNombres">
+                    <label for="">Email:</label>
+                    <input type="text" class="form-control" placeholder="Escribe tu email" id="txtEmail">
+                    <label for="">N°.de telefono:</label>
+                    <input type="text" class="form-control" placeholder="Escribe tu numero de telefono" id="txtTelefono">
+                    <label for="">Direccion:</label>
+                    <input type="text" class="form-control" placeholder="Escribe tu direccion" id="txtDireccion">
+                </div>
+            </div>
+            <div class="col col-md-6 col-md-6 col-md-6">               
+                <div class="card">
+                    <div class="card-header bg-info text-white">Información de la mascota</div>
+                    <label for="">Nombre de mascota:</label>
+                    <input type="text" class="form-control" placeholder="Escribe el nombre de tu mascota" id="txtNombreMascota">
+                    <label for="">Tipo de mascota:</label>
+                    <input type="text" class="form-control" placeholder="Escribe tu tipo de mascota" id="txtTipoMascota">
+                    <label for="">Raza:</label>
+                    <input type="text" class="form-control" placeholder="Escribe la raza" id="txtRaza">
+                    <label for="">Edad:</label>
+                    <input type="text" class="form-control" placeholder="Escribe su edad" id="txtEdad">
+                </div>
+            </div>
+        </div>
+        <br>
+        <button type="button" class="btn bg-info text-white" id="btnGuardar">Guardar</button>
+    </div>
+
+ <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/popper.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
+
 </body>
 </html>
