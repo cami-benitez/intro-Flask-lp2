@@ -1,4 +1,5 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request, redirect, url_for
+from dao.CiudadDao import CiudadDao
 
 app = Flask(__name__)
 
@@ -13,6 +14,19 @@ def contacto():
 @app.route('/contacto2')
 def contacto2():
     return render_template('contacto.html')
+
+@app.route('/ciudades')
+def ciudades():
+    return render_template('ciudades.html')
+
+@app.route('/guardar-ciudad', methods=['POST'])
+def guardarCiudad():
+    ciudad = request.form.get('txtDescripcion')
+    if  ciudad != None and len (ciudad) > 0:
+        return redirect(url_for)
+    ciudaddao = CiudadDao()
+    ciudaddao.guardarCiudad(ciudad)
+    return f"{request.form.get('txtDescripcion')}"
 
 @app.route('/guardar-mascota', methods=['POST'])
 def guardarMascota():
