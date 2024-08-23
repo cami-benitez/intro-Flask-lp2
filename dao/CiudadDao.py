@@ -1,10 +1,8 @@
 #Data access objeto - Dao 
+from flask import current_app as app 
 from conexion.Conexion import Conexion
 class CiudadDao:
-
-    def getCiudades(self):
-        
-
+    
     def getCiudades(self):
         ciudadSQL = """
         SELECT id, descripcion 
@@ -27,12 +25,11 @@ class CiudadDao:
             cur.close()
             con.close()
 
-    def guardarCiudad(self, descripcion):
+    def guardarCiudad(self, descripcion ):
 
         insertCiudadSQL = """
         INSERT INTO ciudades(descripcion) VALUES(%s)
         """
-
         conexion = Conexion()
         con = conexion.getConexion()
         cur = con.cursor()
@@ -43,7 +40,7 @@ class CiudadDao:
             con.commit()
             return True
         except con.Error as e:
-             print(e)
+            app.logger.info(e)
 
         # Siempre se va ejecutar
         finally:
@@ -52,3 +49,63 @@ class CiudadDao:
 
         return False
         
+    def updateCiudad(self, id, descripcion):
+
+        updateCiudadSQL = """
+        UPDATE ciudades
+        SET descripcion=%s
+        WHERE id=%s
+        """
+
+        conexion = Conexion()
+        con = conexion.getConexion()
+        cur = con.cursor()
+
+        # Ejecucion exitosa
+        try:
+            cur.execute(updateCiudadSQL, (descripcion, id,))
+            # se confirma la insercion
+            con.commit()
+
+            return True
+
+        # Si algo fallo entra aqui
+        except con.Error as e:
+            app.logger.info(e)
+
+        # Siempre se va ejecutar
+        finally:
+            cur.close()
+            con.close()
+
+        return False
+
+    def deleteCiudad(self, id):
+
+        updateCiudadSQL = """
+        DELETE FROM ciudades
+        WHERE id=%s
+        """
+
+        conexion = Conexion()
+        con = conexion.getConexion()
+        cur = con.cursor()
+
+        # Ejecucion exitosa
+        try:
+            cur.execute(updateCiudadSQL, (id,))
+            # se confirma la insercion
+            con.commit()
+
+            return True
+
+        # Si algo fallo entra aqui
+        except con.Error as e:
+            app.logger.info(e)
+
+        # Siempre se va ejecutar
+        finally:
+            cur.close()
+            con.close()
+
+        return False
