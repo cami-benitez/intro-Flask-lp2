@@ -3,6 +3,8 @@ from dao.CiudadDao import CiudadDao
 
 app = Flask(__name__)
 
+app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
+
 @app.route('/inicio')
 def inicio():
     return"hola mundo desde el backend"
@@ -20,24 +22,29 @@ def ciudades_index():
     # Creacion de la instalacion de ciudadDao 
     ciudadDao = CiudadDao()
     lista_ciudades = ciudadDao.getCiudades()
-    return render_template('ciudades-htindex-html')
+    return render_template('ciudades-index.html', lista_ciudades=lista_ciudades)
 
 @app.route('/ciudades')
-def ciudades_index():
-    return render_template('ciudades-index.html')
+def ciudades():
+    return render_template('ciudades.html')
 
 @app.route('/guardar-ciudad', methods=['POST'])
 def guardarCiudad():
     ciudad = request.form.get('txtDescripcion').strip()
-    if  ciudad == None or len (ciudad) > 1:
-        #Mostrar un mensaje al usuario
-        Flask('Dede escribir algo en la descripcion', 'warning')
+    if ciudad == None or len(ciudad) < 1:
+        # mostrar un mensaje al usuario
+        Flask('Debe escribir algo en la descripcion', 'warning')
+
+        # redireccionar a la vista ciudades
         return redirect(url_for('ciudades'))
+
     ciudaddao = CiudadDao()
     ciudaddao.guardarCiudad(ciudad.upper())
-    #mostar un mensaje al usuario 
+
+    # mostrar un mensaje al usuario
     Flask('Guardado exitoso', 'success')
-    
+
+    # redireccionar a la vista ciudades
     return redirect(url_for('ciudades_index'))
 
 @app.route('/ciudades-editar/<id>')
@@ -51,13 +58,12 @@ def actualizarCiudad():
     descripcion = request.form.get('txtDescripcion').strip()
 
     if descripcion == None or len(descripcion) == 0:
-        flash('No debe estar vacia la descripcion')
-        return redirect(url_for('ciudadesEditar', id=id))
+     Flask('No debe estar vacia la descripcion')
+    return redirect(url_for('ciudadesEditar', id=id))
 
     # actualizar
     ciudaddao = CiudadDao()
     ciudaddao.updateCiudad(id, descripcion.upper())
-
     return redirect(url_for('ciudades_index'))
 
 @app.route('/guardar-mascota', methods=['POST'])
