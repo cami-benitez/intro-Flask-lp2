@@ -1,44 +1,48 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>>Ciudades</title>
-    <link rel="stylesheet" href="{{url_for('static', filename='css/bootstrap.min.css') }}">
+    <title>Ciudades</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
 </head>
 <body>
+
     <div class="container mt-4">
         <h3>Registro de Ciudades</h3>
 
         <div class="row">
             <!-- columna de la mascota -->
             <div class="col col-md-6">
-                <form action="{{ url_for('guardarMascota') }}" method="post">
+
+                <!-- Formulario -->
+                <form action="{{ url_for('guardarCiudad') }}" method="post">
                     <div class="card">
-                        <div class="card-header bg-primary text-white">Información de la mascota</div>
-                            <div class="card-body">
-                                <div class="form-group">
-                                    <label for="txtDescripcion">Descripcion:</label>
-                                    <input type="text" class="form-control" placeholder="Escriba el nombre de sus mascota" name="txtNombreMascota" id="txtNombreMascota">
-                                </div>
-                                <div class="form-group">
-                                     <label for="txtTipoMascota">Tipo de Mascota:</label>
-                                    <input type="text" class="form-control" placeholder="perro, gato doméstico, conejo doméstico, Hámster, etc" name="txtTipoMascota" id="txtTipoMascota">
-                                </div>
-                                <div class="form-group">
-                                     <label for="txtRaza">Raza:</label>
-                                    <input type="text" class="form-control" placeholder="Doberman, Caniche, San Bernardo, etc" name="txtRaza" id="txtRaza">
-                                </div>
-                                <div class="form-group">
-                                     <label for="txtEdad">Edad:</label>
-                                    <input type="number" class="form-control" placeholder="Edad de su mascota" name="txtEdad" id="txtEdad">
+                        <div class="card-header bg-primary text-white">Información del registro</div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="txtDescripcion">Descripción:</label>
+                                <input type="text" class="form-control" placeholder="Ingrese alguna ciudad" name="txtDescripcion" id="txtDescripcion">
                             </div>
-                         </div>
+
+                            {# Esta bloque busca el mensaje de error #}
+                            {% with messages = get_flashed_messages(with_categories=true) %}
+                            {% if messages %}
+                            {% for category, message in messages %}
+                                <div class="alert alert-{{ category }}">
+                                    <strong>Mensaje al usuario!</strong> {{ message }}
+                                </div>
+                                {% endfor %}
+                            {% endif %}
+                            {% endwith %}
+
+                        </div>
                         <div class="card-footer">
                             <button type="submit" class="btn btn-primary" name="btnGuardar" id="btnGuardar">Guardar</button>
-                     </div>
+                        </div>
                     </div>
                 </form>
+                <!--  -->
 
             </div>
             <!--  -->
@@ -53,9 +57,9 @@
             </div>
         </div>
     </div>
+
     <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/popper.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
-
 </body>
 </html>
