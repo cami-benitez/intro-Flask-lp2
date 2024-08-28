@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, flash
 from dao.CiudadDao import CiudadDao
 
 app = Flask(__name__)
@@ -33,7 +33,7 @@ def guardarCiudad():
     ciudad = request.form.get('txtDescripcion').strip()
     if ciudad == None or len(ciudad) < 1:
         # mostrar un mensaje al usuario
-        Flask('Debe escribir algo en la descripcion', 'warning')
+        flash('Debe escribir algo en la descripcion', 'warning')
 
         # redireccionar a la vista ciudades
         return redirect(url_for('ciudades'))
@@ -42,7 +42,7 @@ def guardarCiudad():
     ciudaddao.guardarCiudad(ciudad.upper())
 
     # mostrar un mensaje al usuario
-    Flask('Guardado exitoso', 'success')
+    flash('Guardado exitoso', 'success')
 
     # redireccionar a la vista ciudades
     return redirect(url_for('ciudades_index'))
@@ -58,8 +58,8 @@ def actualizarCiudad():
     descripcion = request.form.get('txtDescripcion').strip()
 
     if descripcion == None or len(descripcion) == 0:
-     Flask('No debe estar vacia la descripcion')
-    return redirect(url_for('ciudadesEditar', id=id))
+     flash('No debe estar vacia la descripcion')
+     return redirect(url_for('ciudadesEditar', id=id))
 
     # actualizar
     ciudaddao = CiudadDao()
