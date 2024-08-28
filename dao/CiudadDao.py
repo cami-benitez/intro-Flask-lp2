@@ -18,9 +18,40 @@ class CiudadDao:
             # trae datos de la red
             lista_ciudades = cur.fetchall()
             # retorno de datos
-            return lista_ciudades
+            lista_ordenada = []
+            for item in lista_ciudades:
+                lista_ordenada.append({
+                    "id": item[0],
+                    "descripcion": item[1]
+                })
+            return lista_ordenada
         except con.Error as e:
-            print(e)
+            app.logger.info(e)
+        finally:
+            cur.close()
+            con.close()
+
+    def getCiudadById(self, id):
+
+        ciudadSQL = """
+        SELECT id, descripcion
+        FROM ciudades WHERE id=%s
+        """
+        # objeto conexion
+        conexion = Conexion()
+        con = conexion.getConexion()
+        cur = con.cursor()
+        try:
+            cur.execute(ciudadSQL, (id,))
+            # trae datos de la bd
+            ciudadEncontrada = cur.fetchone()
+            # retorno los datos
+            return {
+                    "id": ciudadEncontrada[0],
+                    "descripcion": ciudadEncontrada[1]
+                }
+        except con.Error as e:
+            app.logger.info(e)
         finally:
             cur.close()
             con.close()
