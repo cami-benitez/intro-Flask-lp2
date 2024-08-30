@@ -16,6 +16,6 @@ pip install Flask
 
 #### Mostrar paquetes instalados
 ```python
-pip freeze
+pip freeze     
 pip freeze > paquetes.txt
 ```
