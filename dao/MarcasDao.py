@@ -1,12 +1,12 @@
 #Data access objeto - Dao 
 from flask import current_app as app 
-from conexion.Conexion import Conexion
-class CiudadDao:
+from conexion.conexion import Conexion 
+class MarcasDao:
     
-    def getCiudades(self):
-        ciudadSQL = """
+    def getMarcas(self):
+        marcaSQL = """
         SELECT id, descripcion 
-        FROM ciudades 
+        FROM marcas 
         """
         # objeto conexion 
         conexion = Conexion()
@@ -14,12 +14,12 @@ class CiudadDao:
         cur = con.cursor()
 
         try:
-            cur.execute(ciudadSQL)
+            cur.execute(marcaSQL)
             # trae datos de la red
-            lista_ciudades = cur.fetchall()
+            lista_marcas = cur.fetchall()
             # retorno de datos
             lista_ordenada = []
-            for item in lista_ciudades:
+            for item in lista_marcas:
                 lista_ordenada.append({
                     "id": item[0],
                     "descripcion": item[1]
@@ -31,24 +31,24 @@ class CiudadDao:
             cur.close()
             con.close()
 
-    def getCiudadById(self, id):
+    def getMarcasById(self, id):
 
-        ciudadSQL = """
+        marcaSQL = """
         SELECT id, descripcion
-        FROM ciudades WHERE id=%s
+        FROM marcas WHERE id=%s
         """
         # objeto conexion
         conexion = Conexion()
         con = conexion.getConexion()
         cur = con.cursor()
         try:
-            cur.execute(ciudadSQL, (id,))
+            cur.execute(marcaSQL, (id,))
             # trae datos de la bd
-            ciudadEncontrada = cur.fetchone()
+            marcasEncontrada = cur.fetchone()
             # retorno los datos
             return {
-                    "id": ciudadEncontrada[0],
-                    "descripcion": ciudadEncontrada[1]
+                    "id": marcasEncontrada[0],
+                    "descripcion": marcasEncontrada[1]
                 }
         except con.Error as e:
             app.logger.info(e)
@@ -56,10 +56,10 @@ class CiudadDao:
             cur.close()
             con.close()
 
-    def guardarCiudad(self, descripcion ):
+    def guardarMarcas(self, descripcion ):
 
-        insertCiudadSQL = """
-        INSERT INTO ciudades(descripcion) VALUES(%s)
+        insertMarcaSQL = """
+        INSERT INTO marcas(descripcion) VALUES(%s)
         """
         conexion = Conexion()
         con = conexion.getConexion()
@@ -67,7 +67,7 @@ class CiudadDao:
 
         # Ecjecucion exitosa 
         try:
-            cur.execute(insertCiudadSQL, (descripcion,))
+            cur.execute(insertMarcaSQL, (descripcion,))
             con.commit()
             return True
         except con.Error as e:
@@ -80,10 +80,10 @@ class CiudadDao:
 
         return False
         
-    def updateCiudad(self, id, descripcion):
+    def updateMarca(self, id, descripcion):
 
-        updateCiudadSQL = """
-        UPDATE ciudades
+        updateMarcaSQL = """
+        UPDATE marcas
         SET descripcion=%s
         WHERE id=%s
         """
@@ -94,7 +94,7 @@ class CiudadDao:
 
         # Ejecucion exitosa
         try:
-            cur.execute(updateCiudadSQL, (descripcion, id,))
+            cur.execute(updateMarcaSQL, (descripcion, id,))
             # se confirma la insercion
             con.commit()
 
@@ -111,10 +111,10 @@ class CiudadDao:
 
         return False
 
-    def deleteCiudad(self, id):
+    def deleteMarca(self, id):
 
-        updateCiudadSQL = """
-        DELETE FROM ciudades
+        updateMarcaSQL = """
+        DELETE FROM marcas
         WHERE id=%s
         """
 
@@ -124,7 +124,7 @@ class CiudadDao:
 
         # Ejecucion exitosa
         try:
-            cur.execute(updateCiudadSQL, (id,))
+            cur.execute(updateMarcaSQL, (id,))
             # se confirma la insercion
             con.commit()
 

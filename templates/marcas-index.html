@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ciudades</title>
+    <title>Marcas</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
 </head>
 <body>
@@ -14,7 +14,7 @@
         <!-- Boton agregar -->
         <div class="row mb-2">
           <div class="col col-md-4">
-            <a href="{{ url_for('ciudades') }}" class="btn btn-primary">Agregar</a>
+            <a href="{{ url_for('marcas') }}" class="btn btn-primary">Agregar</a>
           </div>
         </div>
         <!--  -->
@@ -32,16 +32,16 @@
                       </tr>
                     </thead>
                     <tbody>
-                      {% for item in lista_ciudades %}
+                      {% for item in lista_marcas %}
                       <tr>
                         <td>{{ item['descripcion'] }}</td>
                         <td>
                           <div class="row">
                             <div class="col col-md-2">
-                              <a href="{{ url_for('ciudadesEditar', id=item['id']) }}" class="btn btn-primary">Editar</a>
+                              <a href="{{ url_for('marcasEditar', id=item['id']) }}" class="btn btn-primary">Editar</a>
                             </div>
                             <div class="col col-md-2">
-                              <a href="{{ url_for('ciudadesEliminar', id=item['id']) }}" class="btn btn-danger">Eliminar</a>
+                              <a href="{{ url_for('marcasEliminar', id=item['id']) }}" class="btn btn-danger">Eliminar</a>
                             </div>
                           </div>
                         </td>

@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
-from dao.CiudadDao import CiudadDao
+from dao.MarcasDao import MarcasDao 
 
 app = Flask(__name__)
 
@@ -17,54 +17,54 @@ def contacto():
 def contacto2():
     return render_template('contacto.html')
 
-@app.route('/ciudades-index')
-def ciudades_index():
-    # Creacion de la instalacion de ciudadDao 
-    ciudadDao = CiudadDao()
-    lista_ciudades = ciudadDao.getCiudades()
-    return render_template('ciudades-index.html', lista_ciudades=lista_ciudades)
+@app.route('/marcas-index')
+def marcas_index():
+    # Creacion de la instalacion de marcadao 
+    marcasDao = MarcasDao()
+    lista_marcas = marcasDao.getMarcas()
+    return render_template('marcas-index.html', lista_marcas=lista_marcas)
 
-@app.route('/ciudades')
-def ciudades():
-    return render_template('ciudades.html')
+@app.route('/marcas')
+def marcas():
+    return render_template('marcas.html')
 
-@app.route('/guardar-ciudad', methods=['POST'])
-def guardarCiudad():
-    ciudad = request.form.get('txtDescripcion').strip()
-    if ciudad == None or len(ciudad) < 1:
+@app.route('/guardar-marca', methods=['POST'])
+def guardarMarcas():
+    marcas = request.form.get('txtDescripcion').strip()
+    if marcas == None or len(marcas) < 1:
         # mostrar un mensaje al usuario
         flash('Debe escribir algo en la descripcion', 'warning')
 
-        # redireccionar a la vista ciudades
-        return redirect(url_for('ciudades'))
+        # redireccionar a la vista 
+        return redirect(url_for('marcas'))
 
-    ciudaddao = CiudadDao()
-    ciudaddao.guardarCiudad(ciudad.upper())
+    marcasdao = MarcasDao()
+    marcasdao.guardarMarcas(marcas.upper())
 
     # mostrar un mensaje al usuario
     flash('Guardado exitoso', 'success')
 
     # redireccionar a la vista ciudades
-    return redirect(url_for('ciudades_index'))
+    return redirect(url_for('marcas_index'))
 
-@app.route('/ciudades-editar/<id>')
-def ciudadesEditar(id):
-    ciudaddao = CiudadDao()
-    return render_template('ciudades-editar.html', ciudad=ciudaddao.getCiudadById(id))
+@app.route('/marcas-editar/<id>')
+def marcasEditar(id):
+    marcasdao = MarcasDao()
+    return render_template('marcas-editar.html', marca=marcasdao.getMarcasById(id))
 
-@app.route('/actualizar-ciudad', methods=['POST'])
-def actualizarCiudad():
-    id = request.form.get('txtIdCiudad')
+@app.route('/actualizar-marcas', methods=['POST'])
+def actualizarMarcas():
+    id = request.form.get('txtIdMarcas')
     descripcion = request.form.get('txtDescripcion').strip()
 
     if descripcion == None or len(descripcion) == 0:
      flash('No debe estar vacia la descripcion')
-     return redirect(url_for('ciudadesEditar', id=id))
+     return redirect(url_for('marcasEditar', id=id))
 
     # actualizar
-    ciudaddao = CiudadDao()
-    ciudaddao.updateCiudad(id, descripcion.upper())
-    return redirect(url_for('ciudades_index'))
+    marcasdao = MarcasDao()
+    marcasdao.updateMarca(id, descripcion.upper())
+    return redirect(url_for('marcas_index'))
 
 @app.route('/guardar-mascota', methods=['POST'])
 def guardarMascota():
@@ -73,11 +73,11 @@ def guardarMascota():
     return f"Ya llego tu mascota <strong>{nombreMascota}</strong> al servidor"
 
 
-@app.route('/ciudades-eliminar/<id>')
-def ciudadesEliminar(id):
-    ciudaddao = CiudadDao()
-    ciudaddao.deleteCiudad(id)
-    return redirect(url_for('ciudades_index'))
+@app.route('/marcas-eliminar/<id>')
+def marcasEliminar(id):
+    marcasdao = MarcasDao()
+    marcasdao.deleteMarca(id)
+    return redirect(url_for('marcas_index'))
 
 #se pregunta por el proceso principal
 if __name__=='__main__':
